@@ -6,7 +6,7 @@ export interface Props extends IRaffle {
   className?: string;
 }
 
-function TicketCard({ obtained, id, name, image, className }: Props) {
+function Raffle({ obtained, id, name, image, className }: Props) {
   const [collected, drag, dragPreview]: any = useDrag(() => ({
     type: 'RAFFLE',
     item: { id },
@@ -35,4 +35,4 @@ function TicketCard({ obtained, id, name, image, className }: Props) {
   );
 }
 
-export default TicketCard;
+export default Raffle;
