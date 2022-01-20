@@ -11,6 +11,7 @@ import Raffle from './components/Raffle';
 import Select from 'components/Select';
 import Ticket from 'assets/images/ticket.svg';
 import { Listbox, Transition } from '@headlessui/react';
+import { useDrop } from 'react-dnd';
 
 function Home() {
   const raffles: [] = useSelector(getRafflesSelector);
@@ -21,7 +22,12 @@ function Home() {
     dispatch(getRaffles());
   }, [dispatch]);
 
-  console.log(selectedRaffle, 'selectedRaffle');
+  const [collectedProps, drop] = useDrop(() => ({
+    accept: 'RAFFLE',
+    drop: (item: any) => {
+      dispatch(setActiveId(item.id));
+    },
+  }));
 
   return (
     <div>
@@ -42,7 +48,11 @@ function Home() {
           </div>
         </div>
         <div className=" flex flex-col lg:ml-4 flex-1 bg-white shadow rounded order-first md:order-last ">
-          <div className="flex-1 lg:p-8 p-2 sm:p-4 flex flex-col">
+          <div
+            className="flex-1 lg:p-8 p-2 sm:p-4 flex flex-col"
+            ref={drop}
+            {...collectedProps}
+          >
             <div className="text-center lg:py-8 md:py-8">
               <h1 className="text-2xl font-bold">Collectors Event</h1>
               <p>Participate and win high quality currated NFTs</p>
